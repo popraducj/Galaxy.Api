@@ -1,0 +1,8 @@
+.DS_Store
+bin
+obj
+.user
+.idea
+DotSettings.user
+src/Connatix.Web.ConsoleAPI/logo.jpeg
+src/Connatix.Web.ConsoleAPI/connatixLogo.jpeg
