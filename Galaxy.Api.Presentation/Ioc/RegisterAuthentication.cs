@@ -14,7 +14,7 @@ namespace Galaxy.Api.Presentation.Ioc
     {
         public static IServiceCollection AddUserAuthentication(this IServiceCollection services)
         {
-            services.AddSingleton<IUserValidationService, UserValidationService>();
+            services.AddScoped<IUserService, UserService>();
             var builder = services.BuildServiceProvider();
             var appSettings = builder.GetService<IOptions<AppSettings>>();
             
@@ -33,7 +33,7 @@ namespace Galaxy.Api.Presentation.Ioc
                     {
                         OnTokenValidated = async ctx =>
                         {
-                            await ctx.HttpContext.RequestServices.GetRequiredService<IUserValidationService>()
+                            await ctx.HttpContext.RequestServices.GetRequiredService<IUserService>()
                                 .ValidateAsync(ctx);
                         }
                     };

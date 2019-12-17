@@ -64,7 +64,7 @@ namespace Galaxy.Api.Presentation.Ioc
                         return new GraphQLUserContext()
                         {
                             User = context.User,
-                            UserId = Guid.Parse(context.User.Identity.Name)
+                            UserId = context.User.Identity.Name == null? Guid.NewGuid():  Guid.Parse(context.User.Identity.Name)
                         };
                     }
                     catch (ArgumentNullException ex)

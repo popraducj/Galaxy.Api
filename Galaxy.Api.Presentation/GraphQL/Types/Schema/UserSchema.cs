@@ -4,19 +4,19 @@ using Galaxy.Api.Presentation.GraphQl.Types.Queries;
 
 namespace Galaxy.Api.Presentation.GraphQl.Types.Schema
 {
-    public class Test : ISchemaGroup
+    public class UserSchema : ISchemaGroup
     {
         public void SetGroup(RootQuery query)
         {
-            query.Field<TestQueries>(
-                "test",
+            query.Field<UserQueries>(
+                "user",
                 resolve: context => new { });
         }
 
         public void SetGroup(RootMutation mutation)
         {
-            mutation.Field<TestMutations>(
-                "test",
+            mutation.Field<UserMutations>(
+                "user",
                 resolve: context => new { });
         }
     }

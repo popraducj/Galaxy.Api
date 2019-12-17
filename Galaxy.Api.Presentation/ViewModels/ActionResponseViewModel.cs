@@ -1,6 +1,4 @@
-﻿using Galaxy.Api.Core.Models;
-using GraphQL.Authorization.AspNetCore;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 
 namespace Galaxy.Api.Presentation.ViewModels
 {
