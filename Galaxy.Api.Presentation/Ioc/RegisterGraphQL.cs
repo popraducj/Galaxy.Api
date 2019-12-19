@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Galaxy.Api.Core.Models;
 using Galaxy.Api.Presentation.Authorization;
 using GraphQL;
@@ -82,27 +83,17 @@ namespace Galaxy.Api.Presentation.Ioc
         
          public static IServiceCollection RegisterTypes(this IServiceCollection services)
         {
-//            var enumGraphType = typeof(EnumerationGraphType<>);
-//
-//            var coreAssembly = Assembly.Load("Galaxy.Api.Core");
+           var enumGraphType = typeof(EnumerationGraphType<>);
+
+            var coreAssembly = Assembly.Load("Galaxy.Api.Core");
             var presentationAssembly = typeof(Startup).Assembly;
             
             //add all enums
-           /* coreAssembly.GetEnumsForPath("Galaxy.Api.Core.Enums").ForEach(p =>
+            coreAssembly.GetEnumsForPath("Galaxy.Api.Core.Enums").ForEach(p =>
             {               
                 services.AddSingleton(enumGraphType.MakeGenericType(p));
                 GraphTypeTypeRegistry.Register(p, enumGraphType.MakeGenericType(p));               
             });
-
-            services.AddSingleton(enumGraphType.MakeGenericType(typeof(DayOfWeek)));
-            GraphTypeTypeRegistry.Register(typeof(DayOfWeek), enumGraphType.MakeGenericType(typeof(DayOfWeek)));               
-        
-            //add all helper graph types
-            consoleApiAssembly.GetTypesForPath("Galaxy.Api.Presentation.GraphQL.HelperGraphs").ForEach(p =>
-            {
-                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(p.TypeHandle);
-                services.AddScoped(p.UnderlyingSystemType);
-            });*/
 
             //add all view models
             presentationAssembly.GetTypesForPath("Galaxy.Api.Presentation.ViewModels").ForEach(p =>

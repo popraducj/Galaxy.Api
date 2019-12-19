@@ -1,0 +1,30 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Teams.Presentation";
+
+package Captain;
+
+service Captain {
+  rpc UpdateCaptain (UpdateCaptainRequest) returns (CaptainActionReplay);
+  rpc AddCaptain (AddCaptainRequest) returns (CaptainActionReplay);
+}
+
+// The request message containing the user's name.
+message UpdateCaptainRequest {
+  string status = 1;
+}
+
+message AddCaptainRequest {
+  int32 age = 1;
+  string username =2;
+}
+
+message ActionError{
+   string Code = 1;
+   string Description = 2;
+}
+
+message CaptainActionReplay{
+    bool success = 1;
+    repeated ActionError errors = 2;
+}
