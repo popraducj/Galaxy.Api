@@ -1,8 +1,9 @@
-﻿using GraphQL.Types;
+﻿using Galaxy.Api.Core.Models.Teams;
+using GraphQL.Types;
 
-namespace Galaxy.Api.Presentation.ViewModels.Captain
+namespace Galaxy.Api.Presentation.ViewModels.Captains
 {
-    public class CaptainCreateViewModel: InputObjectGraphType<Core.Models.Teams.Captain>
+    public class CaptainCreateViewModel: InputObjectGraphType<Captain>
     {
         public CaptainCreateViewModel()
         {

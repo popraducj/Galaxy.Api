@@ -22,9 +22,9 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             _client = new User.UserClient(channel);
         }
         
-        public async Task<int> VerifyIfUserExistsAsync(string username)
+        public async Task<int> GetUserIdAsync(string username)
         {
-            var replay = await _client.VerifyUserAsync(new UserRequest
+            var replay = await _client.GetUserAsync(new UserRequest
             {
                 Username = username
             });

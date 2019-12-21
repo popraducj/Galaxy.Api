@@ -1,4 +1,5 @@
-﻿using GraphQL;
+﻿using Galaxy.Api.Presentation.GraphQL.Helpers;
+using GraphQL;
 using GraphQL.Types;
 
 namespace Galaxy.Api.Presentation.GraphQl.RootSchema
@@ -9,6 +10,7 @@ namespace Galaxy.Api.Presentation.GraphQl.RootSchema
         {
             Query = resolver.Resolve<RootQuery>();
             Mutation = resolver.Resolve<RootMutation>();
+            RegisterValueConverter(new GuidGraphTypeConverter());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Galaxy.Api.Core.Services
             var userClientGrpcService = ctx.HttpContext.RequestServices.GetRequiredService<IUserClientGrpcService>();
             var permissionClientGrpcService = ctx.HttpContext.RequestServices.GetRequiredService<IPermissionClientGrpcService>();
             var username = ctx.Principal.Identity.Name;
-            var userId = await userClientGrpcService.VerifyIfUserExistsAsync(username);
+            var userId = await userClientGrpcService.GetUserIdAsync(username);
             if (userId == 0)
             {
                 throw new UnauthorizedAccessException();

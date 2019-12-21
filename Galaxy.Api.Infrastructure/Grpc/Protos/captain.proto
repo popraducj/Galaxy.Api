@@ -3,15 +3,18 @@
 option csharp_namespace = "Galaxy.Teams.Presentation";
 
 package Captain;
+import "google/protobuf/empty.proto";
 
 service Captain {
   rpc UpdateCaptain (UpdateCaptainRequest) returns (CaptainActionReplay);
   rpc AddCaptain (AddCaptainRequest) returns (CaptainActionReplay);
+  rpc GetAll (google.protobuf.Empty) returns (stream CaptainReplay);
+  rpc GetById (CaptainIdRequest) returns (CaptainReplay);
 }
 
-// The request message containing the user's name.
 message UpdateCaptainRequest {
-  string status = 1;
+  string id = 1;
+  int32 status =2;
 }
 
 message AddCaptainRequest {
@@ -27,4 +30,16 @@ message ActionError{
 message CaptainActionReplay{
     bool success = 1;
     repeated ActionError errors = 2;
+}
+
+message CaptainReplay{
+    string id =1;
+    int32 expeditions = 2;
+    string name = 3;
+    int32 status = 4;
+    int32 age = 5;
+}
+
+message CaptainIdRequest{
+    string id = 1;
 }

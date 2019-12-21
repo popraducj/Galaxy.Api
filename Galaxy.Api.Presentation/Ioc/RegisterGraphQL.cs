@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Galaxy.Api.Core.Models;
 using Galaxy.Api.Presentation.Authorization;
 using GraphQL;
@@ -95,6 +96,12 @@ namespace Galaxy.Api.Presentation.Ioc
                 GraphTypeTypeRegistry.Register(p, enumGraphType.MakeGenericType(p));               
             });
 
+            //add all helper graph types
+            presentationAssembly.GetTypesForPath("Galaxy.Api.Presentation.GraphQL.Helpers").ForEach(p =>
+            {
+                RuntimeHelpers.RunClassConstructor(p.TypeHandle);
+                services.AddScoped(p.UnderlyingSystemType);
+            });
             //add all view models
             presentationAssembly.GetTypesForPath("Galaxy.Api.Presentation.ViewModels").ForEach(p =>
             {

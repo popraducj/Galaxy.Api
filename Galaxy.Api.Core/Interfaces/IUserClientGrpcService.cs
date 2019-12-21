@@ -5,7 +5,7 @@ namespace Galaxy.Api.Core.Interfaces
 {
     public interface IUserClientGrpcService
     {
-        Task<int> VerifyIfUserExistsAsync(string username);
+        Task<int> GetUserIdAsync(string username);
         Task<UserActionResponse> ActivateAsync(string token);
         Task<UserActionResponse> RegisterAsync(UserRegister model);
         Task<UserActionResponse> UpdateAsync(UserUpdate model);

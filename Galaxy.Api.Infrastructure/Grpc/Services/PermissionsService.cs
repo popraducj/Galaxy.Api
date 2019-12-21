@@ -20,8 +20,6 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             using (var call = client.GetPermissions(new UserPermissionRequest{Id = userId}))
             {
                 var responseStream = call.ResponseStream;
-                StringBuilder responseLog = new StringBuilder("Result: ");
-
                 await foreach (var permission in responseStream.ReadAllAsync())
                 {
                     if(!string.IsNullOrEmpty(Enum.GetName(typeof(UserPermission), permission.Permission)))
