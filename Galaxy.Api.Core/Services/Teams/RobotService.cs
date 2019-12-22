@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Galaxy.Api.Core.Enums;
 using Galaxy.Api.Core.Helpers;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models.Teams;
@@ -17,9 +18,9 @@ namespace Galaxy.Api.Core.Services
             _grpcService = grpcService;
         }
         
-        public Task<ActionResponse> AddAsync(Robot model)
+        public async Task<ActionResponse> AddAsync(Robot model)
         {
-            return _grpcService.AddAsync(model);
+            return await _grpcService.AddAsync(model);
         }
         
         public async Task<ActionResponse> UpdateAsync(Dictionary<string, object> model)
@@ -29,6 +30,10 @@ namespace Galaxy.Api.Core.Services
             if (robot.Id != id) return ActionResponse.NotFound("Robot");
             
             UpdateObjectByReflection.SetProperties(model, robot);
+            if(robot.Status == RobotStatus.Assigned || robot.Status == RobotStatus.Unassigned)
+                return ActionResponse.InvalidStatus($"{RobotStatus.On.ToString()}, {RobotStatus.Off.ToString()}," +
+                                                    $" {RobotStatus.Exploring.ToString()}, {RobotStatus.Deleted.ToString()}" +
+                                                    $", {RobotStatus.Broken.ToString()}");
             return await _grpcService.UpdateAsync(robot);
         }
 

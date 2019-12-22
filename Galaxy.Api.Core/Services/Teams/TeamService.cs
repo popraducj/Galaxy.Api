@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Galaxy.Api.Core.Enums;
 using Galaxy.Api.Core.Helpers;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models.Teams;
@@ -17,9 +18,9 @@ namespace Galaxy.Api.Core.Services
             _grpcService = grpcService;
         }
         
-        public Task<ActionResponse> AddAsync(Team model)
+        public async Task<ActionResponse> AddAsync(Team model)
         {
-            return _grpcService.AddAsync(model);
+            return await _grpcService.AddAsync(model);
         }
         
         public async Task<ActionResponse> UpdateAsync(Dictionary<string, object> model)
@@ -29,7 +30,10 @@ namespace Galaxy.Api.Core.Services
             if (team.Id != id) return ActionResponse.NotFound("Team");
             
             UpdateObjectByReflection.SetProperties(model, team);
-            return await _grpcService.UpdateAsync(team);
+            if (team.Status == TeamStatus.Deleted || team.Status == TeamStatus.Lost)
+                return await _grpcService.UpdateAsync(team);
+            
+            return ActionResponse.InvalidStatus($"{TeamStatus.Deleted.ToString()}, {TeamStatus.Lost.ToString()}");
         }
 
         public async Task<List<Team>> GetAllAsync()

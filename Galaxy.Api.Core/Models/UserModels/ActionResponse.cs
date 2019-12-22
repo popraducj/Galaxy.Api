@@ -26,5 +26,20 @@ namespace Galaxy.Api.Core.Models.UserModels
                 }
             };
         }
+        public static ActionResponse InvalidStatus(string valid)
+        {
+            return new ActionResponse
+            {
+                Success = false,
+                Errors = new List<ActionError>
+                {
+                    new ActionError
+                    {
+                        Code = "InvalidStatus",
+                        Description = $"You can set status only to {valid}"
+                    }
+                }
+            };
+        }
     }
 }
