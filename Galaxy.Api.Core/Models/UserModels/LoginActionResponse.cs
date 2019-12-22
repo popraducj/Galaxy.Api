@@ -1,6 +1,6 @@
 ﻿namespace Galaxy.Api.Core.Models.UserModels
 {
-    public class UserLoginActionResponse : UserActionResponse
+    public class LoginActionResponse : ActionResponse
     {
         public string Token { get; set; }
     }

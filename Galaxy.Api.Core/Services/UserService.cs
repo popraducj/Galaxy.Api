@@ -38,21 +38,21 @@ namespace Galaxy.Api.Core.Services
             ctx.Principal.AddIdentity(new ClaimsIdentity(claims));
         }
         
-        public async Task<UserActionResponse> ActivateAsync(string token)
+        public async Task<ActionResponse> ActivateAsync(string token)
         {
             return await _userClientGrpcService.ActivateAsync(token);
         }
         
-        public async Task<UserActionResponse> RegisterAsync(UserRegister model)
+        public async Task<ActionResponse> RegisterAsync(UserRegister model)
         {
             if (!model.Password.Equals(model.ConfirmPassword))
             {
-                return new UserActionResponse
+                return new ActionResponse
                 {
                     Success = false,
-                    Errors = new List<UserActionError>
+                    Errors = new List<ActionError>
                     {
-                        new UserActionError
+                        new ActionError
                         {
                             Code = "PasswordsDoNotMatch",
                             Description ="Please make sure the password and confirm password have same value" 
@@ -63,21 +63,21 @@ namespace Galaxy.Api.Core.Services
             return await _userClientGrpcService.RegisterAsync(model);
         }
         
-        public async Task<UserActionResponse> UpdateAsync(UserUpdate model)
+        public async Task<ActionResponse> UpdateAsync(UserUpdate model)
         {
             return await _userClientGrpcService.UpdateAsync(model);
         }
 
-        public async Task<UserActionResponse> ChangePasswordAsync(UserChangePassword model)
+        public async Task<ActionResponse> ChangePasswordAsync(UserChangePassword model)
         {
             if (!model.NewPassword.Equals(model.ConfirmNewPassword))
             {
-                return new UserActionResponse
+                return new ActionResponse
                 {
                     Success = false,
-                    Errors = new List<UserActionError>
+                    Errors = new List<ActionError>
                     {
-                        new UserActionError
+                        new ActionError
                         {
                             Code = "PasswordsDoNotMatch",
                             Description ="Please make sure the new password and confirm new password have same value" 
@@ -88,9 +88,9 @@ namespace Galaxy.Api.Core.Services
             return await _userClientGrpcService.ChangePasswordAsync(model);
         }
         
-        public async Task<UserLoginActionResponse> LoginAsync(UserLogin model)
+        public async Task<LoginActionResponse> LoginAsync(UserLogin model)
         {
-            var response = new UserLoginActionResponse();
+            var response = new LoginActionResponse();
             try
             {
                 response.Token = await _userClientGrpcService.LoginAsync(model);
@@ -99,9 +99,9 @@ namespace Galaxy.Api.Core.Services
             catch
             {
                 response.Success = false;
-                response.Errors = new List<UserActionError>
+                response.Errors = new List<ActionError>
                 {
-                    new UserActionError
+                    new ActionError
                     {
                         Code = "FailedLogin",
                         Description = "Login has failed. The email and password do not match"

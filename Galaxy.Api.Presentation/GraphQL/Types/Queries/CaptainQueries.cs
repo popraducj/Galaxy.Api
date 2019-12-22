@@ -1,5 +1,6 @@
 ﻿using System;
 using Galaxy.Api.Core.Interfaces;
+using Galaxy.Api.Core.Models.Teams;
 using Galaxy.Api.Presentation.GraphQL.Helpers;
 using Galaxy.Api.Presentation.ViewModels.Captains;
 using GraphQL.Types;
@@ -8,11 +9,11 @@ namespace Galaxy.Api.Presentation.GraphQl.Types.Queries
 {
     public class CaptainQueries : ObjectGraphType
     {
-        public CaptainQueries(ICaptainService captainService)
+        public CaptainQueries(ICrudService<Captain> captainService)
         {
             FieldAsync<ListGraphType<CaptainQueryViewModel>>(
                 "getAll",
-                "Use this to all the captains",
+                "Use this to get all the captains",
                 new QueryArguments(),
                 async context => await captainService.GetAllAsync());
             

@@ -30,7 +30,7 @@ namespace Galaxy.Api.Presentation.Controllers
             return GenerateResult(response);
         }
         
-        private IActionResult GenerateResult(UserActionResponse response)
+        private IActionResult GenerateResult(ActionResponse response)
         {
             if (response.Success) return Ok();
             

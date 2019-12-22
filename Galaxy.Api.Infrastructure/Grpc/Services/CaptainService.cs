@@ -4,46 +4,48 @@ using System.Threading.Tasks;
 using Galaxy.Api.Core.Enums;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models.UserModels;
+using Galaxy.Api.Infrastructure.Helpers;
+using Galaxy.Teams.Core.Models.Settings;
 using Galaxy.Teams.Presentation;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
-using ActionError = Galaxy.Teams.Presentation.ActionError;
+using Microsoft.Extensions.Options;
 
 namespace Galaxy.Api.Infrastructure.Grpc.Services
 {
-    public class CaptainService : ICaptainGrpcService
+    public class CaptainService : ICrudGrpcService<Core.Models.Teams.Captain>
     {
         private readonly ILogger<CaptainService> _logger;
         private readonly Captain.CaptainClient _client;
 
-        public CaptainService(ILogger<CaptainService> logger)
+        public CaptainService(ILogger<CaptainService> logger, IOptions<AppSettings> appSettings)
         {
             _logger = logger;
             
-            var channel = GrpcChannel.ForAddress("https://localhost:5005");
+            var channel = GrpcChannel.ForAddress(appSettings.Value.Urls.TeamsUrl);
             _client = new Captain.CaptainClient(channel);
         }
 
-        public async Task<UserActionResponse> AddAsync(Core.Models.Teams.Captain captain)
+        public async Task<ActionResponse> AddAsync(Core.Models.Teams.Captain captain)
         {
-            var result = await _client.AddCaptainAsync(new AddCaptainRequest
+            var result = await _client.AddAsync(new CaptainModel
             {
                 Age = captain.Age,
                 Username = captain.Username
             });
-            return ToActionResponse(result);
+            return result.ToActionResponse();
         }
         
-        public async Task<UserActionResponse> UpdateAsync(Core.Models.Teams.Captain captain)
+        public async Task<ActionResponse> UpdateAsync(Core.Models.Teams.Captain captain)
         {
-            var result = await _client.UpdateCaptainAsync(new UpdateCaptainRequest
+            var result = await _client.UpdateAsync(new CaptainModel
             {
                 Id = captain.Id.ToString(),
                 Status = (int)captain.Status
             });
-            return ToActionResponse(result);
+            return result.ToActionResponse();
         }
 
         public async Task<List<Core.Models.Teams.Captain>> GetAllAsync()
@@ -63,16 +65,16 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
 
         public async Task<Core.Models.Teams.Captain> GetByIdAsync(Guid id)
         {
-            var captain = await _client.GetByIdAsync(new CaptainIdRequest
+            var captain = await _client.GetByIdAsync(new IdRequest
             {
                 Id = id.ToString()
             });
             return ToCaptain(captain);
         }
 
-        private static Core.Models.Teams.Captain ToCaptain(CaptainReplay captain)
+        private static Core.Models.Teams.Captain ToCaptain(CaptainModel captain)
         {
-            if (captain == null) return null;
+            if(string.IsNullOrEmpty(captain.Id)) return new Core.Models.Teams.Captain();
             return new Core.Models.Teams.Captain
             {
                  Age = captain.Age,
@@ -82,27 +84,5 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
                  Name = captain.Name
             };
         }
-
-        private static UserActionResponse ToActionResponse(CaptainActionReplay replay)
-        {
-            var response = new UserActionResponse
-            {
-                Success = replay.Success
-            };
-
-            if (replay.Success) return response;
-            
-            foreach (var error in replay.Errors)
-            {
-                replay.Errors.Add(new ActionError
-                {
-                    Code = error.Code,
-                    Description = error.Description
-                });
-            }
-
-            return response;
-        }
-        
     }
 }

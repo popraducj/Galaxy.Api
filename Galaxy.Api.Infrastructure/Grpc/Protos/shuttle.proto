@@ -1,0 +1,27 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Shuttles.Presentation";
+
+package Teams;
+import "google/protobuf/empty.proto";
+import "Grpc/Protos/commonModels.proto";
+
+service Shuttle {
+  rpc Update (ShuttleModel) returns (CommonModels.ActionReplay);
+  rpc Add (ShuttleModel) returns (CommonModels.ActionReplay);
+  rpc GetAll (google.protobuf.Empty) returns (stream ShuttleModel);
+  rpc GetById (CommonModels.IdRequest) returns (ShuttleModel);
+}
+
+message ShuttleModel {
+    string id = 1; 
+    string name = 2;
+    string manufacturer = 3;
+    string model = 4;
+    int32 year = 5;
+    string nextRevision = 6;
+    int32 maxSpeed = 7;
+    int32 fuelConsumption = 8;
+    int32 fuelTankLimit = 9;
+    int32 status = 10;
+}

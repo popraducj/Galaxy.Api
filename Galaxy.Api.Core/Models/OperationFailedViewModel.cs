@@ -5,6 +5,6 @@ namespace Galaxy.Api.Core.Models
 {
     public class OperationFailedViewModel
     {
-        public List<UserActionError> Errors { get; set; }
+        public List<ActionError> Errors { get; set; }
     }
 }

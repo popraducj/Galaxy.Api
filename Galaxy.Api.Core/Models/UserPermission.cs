@@ -5,6 +5,7 @@
         AddCaptain,
         AddPlanet,
         AddRobot,
-        AddInvalidPermission
+        AddShuttle,
+        AddTeam
     }
 }

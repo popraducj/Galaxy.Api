@@ -9,14 +9,14 @@ namespace Galaxy.Api.Presentation.GraphQl.Types.Schema
         public void SetGroup(RootQuery query)
         {
             query.Field<CaptainQueries>(
-                "captain",
+                "captains",
                 resolve: context => new { });
         }
 
         public void SetGroup(RootMutation mutation)
         {
             mutation.Field<CaptainMutations>(
-                "captain",
+                "captains",
                 resolve: context => new { });
         }
     }

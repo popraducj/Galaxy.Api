@@ -20,6 +20,10 @@
     <Protobuf Include="Grpc\Protos\captain.proto" GrpcServices="Client" />
     <Protobuf Include="Grpc\Protos\permissions.proto" GrpcServices="Client" />
     <Protobuf Include="Grpc\Protos\user.proto" GrpcServices="Client" />
+    <Protobuf Include="Grpc\Protos\robot.proto" GrpcServices="Client" />
+    <Protobuf Include="Grpc\Protos\commonModels.proto" GrpcServices="Client" />
+    <Protobuf Include="Grpc\Protos\shuttle.proto" GrpcServices="Client" />
+    <Protobuf Include="Grpc\Protos\team.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

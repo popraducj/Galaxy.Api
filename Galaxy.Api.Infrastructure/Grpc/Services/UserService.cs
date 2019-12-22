@@ -4,8 +4,12 @@ using System.Threading.Tasks;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models.UserModels;
 using Galaxy.Auth.Grpc;
+using Galaxy.Teams.Core.Models.Settings;
+using Galaxy.Teams.Presentation;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using ActionError = Galaxy.Api.Core.Models.UserModels.ActionError;
 
 namespace Galaxy.Api.Infrastructure.Grpc.Services
 {
@@ -14,11 +18,11 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
         private readonly ILogger<UserService> _logger;
         private readonly User.UserClient _client;
 
-        public UserService(ILogger<UserService> logger)
+        public UserService(ILogger<UserService> logger, IOptions<AppSettings> appSettings)
         {
             _logger = logger;
             
-            var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            var channel = GrpcChannel.ForAddress(appSettings.Value.Urls.AuthUrl);
             _client = new User.UserClient(channel);
         }
         
@@ -31,7 +35,7 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             return replay.Id;
         }
         
-        public async Task<UserActionResponse> ActivateAsync(string token)
+        public async Task<ActionResponse> ActivateAsync(string token)
         {
             try
             {
@@ -49,7 +53,7 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             }
         }
 
-        public async Task<UserActionResponse> RegisterAsync(UserRegister model)
+        public async Task<ActionResponse> RegisterAsync(UserRegister model)
         {
             try
             {
@@ -69,7 +73,7 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             }
         }
 
-        public async Task<UserActionResponse> UpdateAsync(UserUpdate model)
+        public async Task<ActionResponse> UpdateAsync(UserUpdate model)
         {
             
             try
@@ -90,7 +94,7 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             }
         }
 
-        public async Task<UserActionResponse> ChangePasswordAsync(UserChangePassword model)
+        public async Task<ActionResponse> ChangePasswordAsync(UserChangePassword model)
         {
             try
             {
@@ -129,17 +133,17 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             }
         }
 
-        private static UserActionResponse ToActionResponse(UserActionReplay protoReplay)
+        private static ActionResponse ToActionResponse(ActionReplay protoReplay)
         {
-            var response = new UserActionResponse
+            var response = new ActionResponse
             {
                 Success = protoReplay.Success,
-                Errors = new List<UserActionError>()
+                Errors = new List<ActionError>()
             };
 
             foreach (var error in protoReplay.Errors)
             {
-                response.Errors.Add(new UserActionError
+                response.Errors.Add(new ActionError
                 {
                     Code = error.Code,
                     Description = error.Description
@@ -149,14 +153,14 @@ namespace Galaxy.Api.Infrastructure.Grpc.Services
             return response;
         }
 
-        private static UserActionResponse GetUnauthorizedAccessError()
+        private static ActionResponse GetUnauthorizedAccessError()
         {
-            return new UserActionResponse
+            return new ActionResponse
             {
                 Success = false,
-                Errors = new List<UserActionError>
+                Errors = new List<ActionError>
                 {
-                    new UserActionError
+                    new ActionError
                     {
                         Code = "UnauthorizedAccess",
                         Description = "You are not authorize to perform this action"

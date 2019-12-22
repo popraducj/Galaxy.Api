@@ -1,11 +1,11 @@
 ﻿using Galaxy.Api.Core.Models.UserModels;
 using GraphQL.Types;
 
-namespace Galaxy.Api.Presentation.ViewModels.Users
+namespace Galaxy.Api.Presentation.ViewModels
 {
-    public class UserActionErrorViewModel : ObjectGraphType<UserActionError>
+    public class ActionErrorViewModel : ObjectGraphType<ActionError>
     {
-        public UserActionErrorViewModel()
+        public ActionErrorViewModel()
         {
             Field(x => x.Code).Description("Error code");
             Field(x => x.Description).Description("Error description");

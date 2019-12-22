@@ -7,10 +7,10 @@ namespace Galaxy.Api.Core.Interfaces
     public interface IUserService
     {
         Task ValidateAsync(TokenValidatedContext ctx);
-        Task<UserActionResponse> ActivateAsync(string token);
-        Task<UserActionResponse> RegisterAsync(UserRegister model);
-        Task<UserActionResponse> UpdateAsync(UserUpdate model);
-        Task<UserActionResponse> ChangePasswordAsync(UserChangePassword model);
-        Task<UserLoginActionResponse> LoginAsync(UserLogin model);
+        Task<ActionResponse> ActivateAsync(string token);
+        Task<ActionResponse> RegisterAsync(UserRegister model);
+        Task<ActionResponse> UpdateAsync(UserUpdate model);
+        Task<ActionResponse> ChangePasswordAsync(UserChangePassword model);
+        Task<LoginActionResponse> LoginAsync(UserLogin model);
     }
 }

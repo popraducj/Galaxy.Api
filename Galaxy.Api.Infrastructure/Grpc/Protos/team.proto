@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Teams.Presentation";
+
+package Teams;
+import "google/protobuf/empty.proto";
+import "Grpc/Protos/commonModels.proto";
+
+service Team {
+  rpc Update (TeamModel) returns (CommonModels.ActionReplay);
+  rpc Add (TeamModel) returns (CommonModels.ActionReplay);
+  rpc GetAll (google.protobuf.Empty) returns (stream TeamModel);
+  rpc GetById (CommonModels.IdRequest) returns (TeamModel);
+}
+
+message TeamModel {
+    string id = 1; 
+    string name = 2;
+    int32 status = 3;
+    string captainId = 4;
+    repeated string robotsIds = 5;
+    string shuttleId = 6;
+}

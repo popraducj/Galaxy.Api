@@ -6,10 +6,10 @@ namespace Galaxy.Api.Core.Interfaces
     public interface IUserClientGrpcService
     {
         Task<int> GetUserIdAsync(string username);
-        Task<UserActionResponse> ActivateAsync(string token);
-        Task<UserActionResponse> RegisterAsync(UserRegister model);
-        Task<UserActionResponse> UpdateAsync(UserUpdate model);
-        Task<UserActionResponse> ChangePasswordAsync(UserChangePassword model);
+        Task<ActionResponse> ActivateAsync(string token);
+        Task<ActionResponse> RegisterAsync(UserRegister model);
+        Task<ActionResponse> UpdateAsync(UserUpdate model);
+        Task<ActionResponse> ChangePasswordAsync(UserChangePassword model);
         Task<string> LoginAsync(UserLogin model);
     }
 }

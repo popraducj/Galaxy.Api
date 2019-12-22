@@ -5,6 +5,7 @@ using Galaxy.Api.Presentation.ViewModels;
 using Galaxy.Api.Presentation.ViewModels.Users;
 using GraphQL;
 using GraphQL.Types;
+using ActionResponseViewModel = Galaxy.Api.Presentation.ViewModels.ActionResponseViewModel;
 
 namespace Galaxy.Api.Presentation.GraphQl.Types.Mutations
 {
@@ -12,7 +13,7 @@ namespace Galaxy.Api.Presentation.GraphQl.Types.Mutations
     {
         public UserMutations(IUserService userService)
         {
-            FieldAsync<UserActionResponseViewModel>(
+            FieldAsync<ActionResponseViewModel>(
                 "register",
                 "Register new user in the platform",
                 new QueryArguments(new QueryArgument<UserRegisterViewModel> {Name = "register"}),
@@ -21,7 +22,7 @@ namespace Galaxy.Api.Presentation.GraphQl.Types.Mutations
                     var model = context.GetArgument<UserRegister>("register");
                     return await userService.RegisterAsync(model);
                 });
-            FieldAsync<UserActionResponseViewModel>(
+            FieldAsync<ActionResponseViewModel>(
                 "changePassword",
                 "User change password",
                 new QueryArguments(new QueryArgument<UserChangePasswordViewModel> {Name = "password"}),
@@ -33,7 +34,7 @@ namespace Galaxy.Api.Presentation.GraphQl.Types.Mutations
                     model.Username = userContext.UserId.ToString();
                     return await userService.ChangePasswordAsync(model);
                 });
-            FieldAsync<UserActionResponseViewModel>(
+            FieldAsync<ActionResponseViewModel>(
                 "update",
                 "Update user profile information",
                 new QueryArguments(new QueryArgument<UserUpdateViewModel> {Name = "profile"}),

@@ -2,44 +2,22 @@
 
 option csharp_namespace = "Galaxy.Teams.Presentation";
 
-package Captain;
+package Teams;
 import "google/protobuf/empty.proto";
+import "Grpc/Protos/commonModels.proto";
 
 service Captain {
-  rpc UpdateCaptain (UpdateCaptainRequest) returns (CaptainActionReplay);
-  rpc AddCaptain (AddCaptainRequest) returns (CaptainActionReplay);
-  rpc GetAll (google.protobuf.Empty) returns (stream CaptainReplay);
-  rpc GetById (CaptainIdRequest) returns (CaptainReplay);
+  rpc Update (CaptainModel) returns (CommonModels.ActionReplay);
+  rpc Add (CaptainModel) returns (CommonModels.ActionReplay);
+  rpc GetAll (google.protobuf.Empty) returns (stream CaptainModel);
+  rpc GetById (CommonModels.IdRequest) returns (CaptainModel);
 }
 
-message UpdateCaptainRequest {
-  string id = 1;
-  int32 status =2;
-}
-
-message AddCaptainRequest {
-  int32 age = 1;
-  string username =2;
-}
-
-message ActionError{
-   string Code = 1;
-   string Description = 2;
-}
-
-message CaptainActionReplay{
-    bool success = 1;
-    repeated ActionError errors = 2;
-}
-
-message CaptainReplay{
+message CaptainModel{
     string id =1;
     int32 expeditions = 2;
     string name = 3;
     int32 status = 4;
     int32 age = 5;
-}
-
-message CaptainIdRequest{
-    string id = 1;
+    string username = 6;
 }
