@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models.UserModels;
 using Galaxy.Api.Infrastructure.Helpers;
-using Galaxy.Teams.Presentation;
+using Galaxy.Teams;
 using Galaxy.Teams.Core.Models.Settings;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;

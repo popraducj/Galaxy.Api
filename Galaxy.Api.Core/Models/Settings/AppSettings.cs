@@ -1,4 +1,6 @@
-﻿namespace Galaxy.Teams.Core.Models.Settings
+﻿using Galaxy.Api.Core.Models.Settings;
+
+namespace Galaxy.Teams.Core.Models.Settings
 {
     public class AppSettings
     {

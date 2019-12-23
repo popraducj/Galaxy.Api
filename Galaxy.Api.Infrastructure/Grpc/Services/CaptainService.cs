@@ -6,7 +6,7 @@ using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models.UserModels;
 using Galaxy.Api.Infrastructure.Helpers;
 using Galaxy.Teams.Core.Models.Settings;
-using Galaxy.Teams.Presentation;
+using Galaxy.Teams;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;

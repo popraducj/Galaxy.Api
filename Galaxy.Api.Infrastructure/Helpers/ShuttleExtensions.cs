@@ -1,6 +1,6 @@
 ﻿using System;
 using Galaxy.Api.Core.Enums;
-using Galaxy.Shuttles.Presentation;
+using Galaxy.Shuttles;
 using Shuttle = Galaxy.Api.Core.Models.Teams.Shuttle;
 
 namespace Galaxy.Api.Infrastructure.Helpers
@@ -25,6 +25,7 @@ namespace Galaxy.Api.Infrastructure.Helpers
         }
         public static Shuttle ToShuttle(this ShuttleModel shuttle)
         {
+            if(!Guid.TryParse(shuttle.Id, out _)) return new Core.Models.Teams.Shuttle();
             return new Shuttle
             {
                 Id = Guid.Parse(shuttle.Id),

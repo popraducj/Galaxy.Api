@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models;
-using Galaxy.Auth.Grpc;
+using Galaxy.Auth;
 using Grpc.Core;
 using Grpc.Net.Client;
 

@@ -1,5 +1,5 @@
 ﻿using Galaxy.Api.Core.Models.UserModels;
-using Galaxy.Teams.Presentation;
+using Galaxy.Teams;
 
 namespace Galaxy.Api.Infrastructure.Helpers
 {

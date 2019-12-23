@@ -1,11 +1,10 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
-namespace Galaxy.Teams.Presentation.Middleware
+namespace Galaxy.Api.Presentation.Middleware
 {
     public static class ExceptionMiddlewareExtensions
     {

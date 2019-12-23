@@ -24,6 +24,8 @@
     <Protobuf Include="Grpc\Protos\commonModels.proto" GrpcServices="Client" />
     <Protobuf Include="Grpc\Protos\shuttle.proto" GrpcServices="Client" />
     <Protobuf Include="Grpc\Protos\team.proto" GrpcServices="Client" />
+    <Protobuf Include="Grpc\Protos\exploration.proto" GrpcServices="Client" />
+    <Protobuf Include="Grpc\Protos\planet.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

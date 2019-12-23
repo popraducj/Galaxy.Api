@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "Galaxy.Robots.Presentation";
+option csharp_namespace = "Galaxy.Robots";
 
 package Teams;
 import "google/protobuf/empty.proto";

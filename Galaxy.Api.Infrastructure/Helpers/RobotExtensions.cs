@@ -1,6 +1,6 @@
 ﻿using System;
 using Galaxy.Api.Core.Enums;
-using Galaxy.Robots.Presentation;
+using Galaxy.Robots;
 
 namespace Galaxy.Api.Infrastructure.Helpers
 {
@@ -24,6 +24,7 @@ namespace Galaxy.Api.Infrastructure.Helpers
         }
         public static Core.Models.Teams.Robot ToRobot(this RobotModel robot)
         {
+            if(!Guid.TryParse(robot.Id, out _)) return new Core.Models.Teams.Robot();
             return new Core.Models.Teams.Robot
             {
                 Id = Guid.Parse(robot.Id),

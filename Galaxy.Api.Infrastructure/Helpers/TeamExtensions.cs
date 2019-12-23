@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Galaxy.Api.Core.Enums;
-using Galaxy.Teams.Presentation;
+using Galaxy.Api.Core.Models.Teams;
+using Galaxy.Teams;
 
 namespace Galaxy.Api.Infrastructure.Helpers
 {
@@ -22,6 +23,8 @@ namespace Galaxy.Api.Infrastructure.Helpers
         }
         public static Core.Models.Teams.Team ToTeam(this TeamModel team)
         {
+            if(!Guid.TryParse(team.Id, out _)) return new Core.Models.Teams.Team();
+            
             var response = new Core.Models.Teams.Team
             {
                 Id = Guid.Parse(team.Id),

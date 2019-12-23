@@ -25,15 +25,20 @@ namespace Galaxy.Api.Core.Services
         
         public async Task<ActionResponse> UpdateAsync(Dictionary<string, object> model)
         {
+            if (model.TryGetValue("status", out var status))
+            {
+                var robotNewStatus = int.Parse(status.ToString());
+                if (robotNewStatus == (int) RobotStatus.Assigned || robotNewStatus == (int)RobotStatus.Unassigned)
+                    return ActionResponse.InvalidStatus($"{RobotStatus.On.ToString()}, {RobotStatus.Off.ToString()}," +
+                                                        $" {RobotStatus.Exploring.ToString()}, {RobotStatus.Deleted.ToString()}" +
+                                                        $", {RobotStatus.Broken.ToString()}");
+            }
+            
             var id = Guid.Parse(model["id"].ToString());
             var robot = await _grpcService.GetByIdAsync(id);
             if (robot.Id != id) return ActionResponse.NotFound("Robot");
             
             UpdateObjectByReflection.SetProperties(model, robot);
-            if(robot.Status == RobotStatus.Assigned || robot.Status == RobotStatus.Unassigned)
-                return ActionResponse.InvalidStatus($"{RobotStatus.On.ToString()}, {RobotStatus.Off.ToString()}," +
-                                                    $" {RobotStatus.Exploring.ToString()}, {RobotStatus.Deleted.ToString()}" +
-                                                    $", {RobotStatus.Broken.ToString()}");
             return await _grpcService.UpdateAsync(robot);
         }
 
