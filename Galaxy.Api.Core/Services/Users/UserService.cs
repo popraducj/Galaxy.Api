@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Galaxy.Api.Core.Enums;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Models;
 using Galaxy.Api.Core.Models.UserModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Galaxy.Api.Core.Services
+namespace Galaxy.Api.Core.Services.Users
 {
     public class UserService :IUserService
     {
@@ -29,7 +30,7 @@ namespace Galaxy.Api.Core.Services
                 throw new UnauthorizedAccessException();
             }
 
-            var permissions = await permissionClientGrpcService.GetPermissions(userId);
+            var permissions = await permissionClientGrpcService.GetPermissionsAsync(userId);
             var claims = new List<Claim>();
             permissions.ForEach(x =>
             {

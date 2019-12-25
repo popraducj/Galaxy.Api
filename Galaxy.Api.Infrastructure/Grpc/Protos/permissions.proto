@@ -3,11 +3,12 @@
 option csharp_namespace = "Galaxy.Auth";
 
 package GrpcAuth;
+import "Grpc/Protos/commonModels.proto";
 
 // The permissions service definition.
 service Permissions {
-  rpc AddPermission (stream PermissionRequest) returns (PermissionReply);
-  rpc RemovePermission (stream PermissionRequest) returns (PermissionReply);
+  rpc AddPermission (stream PermissionRequest) returns (CommonModels.ActionReplay);
+  rpc RemovePermission (stream PermissionRequest) returns (CommonModels.ActionReplay);
   rpc GetPermissions (UserPermissionRequest) returns (stream UserPermissionReplay);
 }
 

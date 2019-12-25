@@ -22,4 +22,8 @@
     <Folder Include="GraphQL\RootSchema" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="appsettings*.json" CopyToOutputDirectory="Always" />
+    <None Include="NLog*.config" CopyToOutputDirectory="Always" />
+  </ItemGroup>
 </Project>

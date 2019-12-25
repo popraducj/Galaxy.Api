@@ -25,16 +25,20 @@ namespace Galaxy.Api.Core.Services
         
         public async Task<ActionResponse> UpdateAsync(Dictionary<string, object> model)
         {
-            if (model.TryGetValue("status", out var status))
-            {
-                var shuttleNewStatus = int.Parse(status.ToString());
-                if (shuttleNewStatus == (int) ShuttleStatus.Assigned || shuttleNewStatus == (int)ShuttleStatus.Unassigned)
-                    return ActionResponse.InvalidStatus($"{ShuttleStatus.Deleted.ToString()}, {ShuttleStatus.Broken.ToString()}," +
-                                                        $" {ShuttleStatus.Off.ToString()}, {ShuttleStatus.On.ToString()}");
-            }
-            
             var id = Guid.Parse(model["id"].ToString());
             var shuttle = await _grpcService.GetByIdAsync(id);
+            
+            if (model.TryGetValue("status", out var status))
+            {
+                var shuttleNewStatus = (ShuttleStatus)int.Parse(status.ToString());
+                if (shuttleNewStatus == ShuttleStatus.Assigned || shuttleNewStatus == ShuttleStatus.Unassigned)
+                    return ActionResponse.InvalidStatus($"{ShuttleStatus.Deleted.ToString()}, {ShuttleStatus.Broken.ToString()}," +
+                                                        $" {ShuttleStatus.Off.ToString()}, {ShuttleStatus.On.ToString()}");
+                
+                if(shuttleNewStatus == ShuttleStatus.Deleted && shuttle.Status != ShuttleStatus.Unassigned)
+                    return ActionResponse.CantDelete(nameof(Shuttle));
+            }
+            
             if (shuttle.Id != id) return ActionResponse.NotFound("Shuttle");
             
             UpdateObjectByReflection.SetProperties(model, shuttle);

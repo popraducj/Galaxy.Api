@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Galaxy.Api.Core.Enums;
 using Galaxy.Api.Core.Models;
 using Galaxy.Api.Presentation.Authorization;
 using GraphQL;

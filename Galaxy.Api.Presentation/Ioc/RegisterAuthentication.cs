@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Galaxy.Api.Core.Interfaces;
 using Galaxy.Api.Core.Services;
+using Galaxy.Api.Core.Services.Users;
 using Galaxy.Teams.Core.Models.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;

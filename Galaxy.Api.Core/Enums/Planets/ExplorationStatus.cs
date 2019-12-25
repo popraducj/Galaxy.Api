@@ -2,9 +2,8 @@
 {
     public enum ExplorationStatus
     {
-        NotExplored,
-        EnRoute,
-        Ok,
-        NotOk
+        EnRouteToPlanet,
+        Exploring,
+        Finished
     }
 }

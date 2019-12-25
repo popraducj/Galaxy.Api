@@ -41,5 +41,37 @@ namespace Galaxy.Api.Core.Models.UserModels
                 }
             };
         }
+        
+        public static ActionResponse CantDelete(string name)
+        {
+            return new ActionResponse
+            {
+                Success = false,
+                Errors = new List<ActionError>
+                {
+                    new ActionError
+                    {
+                        Code = "CantDelete",
+                        Description = $"You can't' delete a {name} if it is not in Unassigned state"
+                    }
+                }
+            };
+        }
+        
+        public static ActionResponse ServerError()
+        {
+            return new ActionResponse
+            {
+                Success = false,
+                Errors = new List<ActionError>
+                {
+                    new ActionError
+                    {
+                        Code = "ServerError",
+                        Description = $"Something went wrong please try again later"
+                    }
+                }
+            };
+        }
     }
 }
