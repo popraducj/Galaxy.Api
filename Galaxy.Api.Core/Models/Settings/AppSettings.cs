@@ -6,5 +6,6 @@ namespace Galaxy.Teams.Core.Models.Settings
     {
         public JwtSettings Jwt { get; set; }
         public Urls Urls { get; set; }
+        public string AllowedOrigins { get; set; }
     }
 }

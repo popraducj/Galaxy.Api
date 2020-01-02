@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Galaxy.Api.Core.Models;
 using Galaxy.Api.Presentation.Ioc;
 using Galaxy.Api.Presentation.Middleware;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Galaxy.Api.Presentation
 {
@@ -42,7 +44,7 @@ namespace Galaxy.Api.Presentation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger, IOptions<AppSettings> appSettings)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +53,16 @@ namespace Galaxy.Api.Presentation
             app.ConfigureExceptionHandler(logger.CreateLogger("Galaxy.Api.GlobalLogger"));
             app.UseHttpsRedirection();
 
+            app.UseCors(builder =>
+                {
+                    builder.WithOrigins(appSettings.Value.AllowedOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        ?.Select(o => o.Trim())
+                        .ToArray());
+                    builder.AllowAnyMethod();
+                    builder.AllowCredentials();
+                    builder.AllowAnyHeader();
+                }
+            );
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthentication();
